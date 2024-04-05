@@ -1,6 +1,6 @@
 import UIKit
 
-protocol MovieDatabaseAPIClientProtocol {
+public protocol MovieDatabaseAPIClientProtocol {
     func searchMovies(
         query: String, language: String?, page: Int?, includeAdult: Bool?,
         region: String?, year: Int?, primaryReleaseYear: Int?
