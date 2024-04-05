@@ -1,6 +1,43 @@
 import UIKit
 
-final public class MovieDatabaseAPIClient {
+protocol MovieDatabaseAPIClientProtocol {
+    func searchMovies(
+        query: String, language: String?, page: Int?, includeAdult: Bool?,
+        region: String?, year: Int?, primaryReleaseYear: Int?
+    ) async throws -> Page<Movie>
+
+    func searchTVShows(
+        query: String, language: String?, page: Int?, includeAdult: Bool?, firstAirDateYear: Int?
+    ) async throws -> Page<TVShow>
+
+    func fetchMovieWatchProviders(movieID: Movie.ID) async throws -> WatchProviderResult
+
+    func fetchTVShowWatchProviders(tvShowID: TVShow.ID) async throws -> WatchProviderResult
+
+    func fetchMovieGenresList(language: String) async throws -> GenreList
+
+    func fetchTVShowGenresList(language: String) async throws -> GenreList
+
+    func fetchImage(imageSize: MovieDatabaseURL.ImageSize, imagePath: String) async throws -> UIImage?
+
+    func fetchTrendingMovies(timeWindow: MovieDatabaseURL.TimeWindow, language: String) async throws -> Page<Movie>
+
+    func fetchTrendingTVShows(timeWindow: MovieDatabaseURL.TimeWindow, language: String) async throws -> Page<TVShow>
+
+    func fetchMovieCredits(movieID: Movie.ID, language: String) async throws -> [Credit]
+
+    func fetchTVShowCredits(tvShowID: TVShow.ID, language: String) async throws -> [Credit]
+
+    func fetchSimilarMovies(movieID: Movie.ID, language: String, page: Int?) async throws -> Page<Movie>
+
+    func fetchSimilarTVShows(tvShowID: TVShow.ID, language: String, page: Int?) async throws -> Page<TVShow>
+
+    func fetchMovieDetail(movieID: Movie.ID, language: String) async throws -> Movie
+
+    func fetchTVShowDetail(tvShowID: TVShow.ID, language: String) async throws -> TVShow
+}
+
+final public class MovieDatabaseAPIClient: MovieDatabaseAPIClientProtocol {
     private let apiKey: String
     private let session: URLSessionProtocol
     private let imageCache: ImageCacheProtocol
