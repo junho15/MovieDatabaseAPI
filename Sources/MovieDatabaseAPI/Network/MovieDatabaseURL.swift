@@ -204,7 +204,7 @@ extension MovieDatabaseURL {
         case original
         case w500
 
-        fileprivate var stringValue: String {
+        public var stringValue: String {
             switch self {
             case .original: return "/original"
             case .w500: return "/w500"
